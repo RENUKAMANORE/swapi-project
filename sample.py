@@ -1,23 +1,29 @@
-from typing import List, Optional, Union
+"""
+
+pip install pymysql
+pip install cryptography
 
 
-def add_all(foo: List[int]) -> Optional[int]:
-    if isinstance(foo, list):
-        return sum(foo)
-    return None
+# if you want to create new user and want to grant to root permissions to him
+
+CREATE USER adam@localhost IDENTIFIED BY 'qwerty@123';
+GRANT ALL PRIVILEGES ON *.* TO adam WITH GRANT OPTION;
+SHOW GRANTS FOR adam;
+
+"""
+
+import pymysql
 
 
-def add_all2(foo: List[int]) -> int | None:
-    if isinstance(foo, list):
-        return sum(foo)
-    return None
+# connection to database
+connection = pymysql.connect(
+    host='localhost',
+    user='adam',
+    password='qwerty@123',
+    database='starwarsDB'
+ )
 
-
-def add_all3(foo: List[int]) -> Union[int, None]:
-    if isinstance(foo, list):
-        return sum(foo)
-    return None
-
-
-result = add_all([1, 2, 3, 4])
+cursor = connection.cursor()
+sql = "select * from starwarsDB.species_sample;"
+result = cursor.execute(sql)
 print(result)
